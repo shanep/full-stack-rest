@@ -1,0 +1,10 @@
+<%- include("partials/head", { pageTitle: title }) %>
+
+<section class="panel error">
+  <h1><%= title %></h1>
+  <p class="status">HTTP <%= status %></p>
+  <p><%= message %></p>
+  <p><a class="button" href="/">Back to course list</a></p>
+</section>
+
+<%- include("partials/foot") %>

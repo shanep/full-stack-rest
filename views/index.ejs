@@ -1,0 +1,16 @@
+<%- include("partials/head", { pageTitle: "Choose a course" }) %>
+
+<section class="panel">
+  <h1>Choose a course</h1>
+  <% if (courses.length === 0) { %>
+    <p class="empty">
+      Canvas returned no active courses for this token. If you expect to see courses here,
+      check that the token belongs to your student account.
+    </p>
+  <% } else { %>
+    <p class="muted"><%= courses.length %> active course<%= courses.length === 1 ? "" : "s" %> found.</p>
+    <%- include("partials/course-form", { courses, selectedCourseId, hideSubmitted: false }) %>
+  <% } %>
+</section>
+
+<%- include("partials/foot") %>

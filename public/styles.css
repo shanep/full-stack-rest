@@ -1,0 +1,121 @@
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #1c2430;
+  --muted: #5f6b7a;
+  --line: #dfe4ea;
+  --accent: #2f6fed;
+  --overdue: #c0392b;
+  --today: #d35400;
+  --soon: #b7791f;
+  --upcoming: #2d7a4f;
+  --none: #6b7280;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 1rem 3rem;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main, .site-header, .site-footer { max-width: 60rem; margin: 0 auto; }
+
+.site-header { padding: 2rem 0 1rem; }
+.brand { font-size: 1.4rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+.tagline { margin: .25rem 0 0; color: var(--muted); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+h1 { margin: 0 0 .75rem; font-size: 1.35rem; }
+.muted { color: var(--muted); margin: 0 0 1rem; }
+.empty { color: var(--muted); margin: 0; }
+
+/* --- form ------------------------------------------------------------- */
+.course-form { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; }
+.course-form label { font-weight: 600; }
+.course-form select {
+  flex: 1 1 18rem;
+  padding: .5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+}
+.checkbox { display: flex; align-items: center; gap: .4rem; font-weight: 400; color: var(--muted); }
+
+button, .button {
+  padding: .55rem 1.1rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+button:hover, .button:hover { filter: brightness(1.08); }
+
+/* --- summary pills ---------------------------------------------------- */
+.summary { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0 0 1rem; }
+.pill {
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-size: .875rem;
+  color: var(--muted);
+}
+.pill.overdue  { border-color: var(--overdue);  color: var(--overdue); }
+.pill.today    { border-color: var(--today);    color: var(--today); }
+.pill.soon     { border-color: var(--soon);     color: var(--soon); }
+.pill.upcoming { border-color: var(--upcoming); color: var(--upcoming); }
+
+/* --- table ------------------------------------------------------------ */
+.assignments {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.assignments caption { text-align: left; padding: .75rem 1rem; color: var(--muted); }
+.assignments th, .assignments td {
+  padding: .6rem 1rem;
+  border-top: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.assignments thead th { background: #eef1f5; border-top: 0; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+.assignments tbody th { font-weight: 600; }
+.assignments a { color: var(--accent); }
+.numeric { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Color-code each row by how soon it is due. */
+tr.urgency-overdue th[scope="row"] { border-left: 4px solid var(--overdue); }
+tr.urgency-today   th[scope="row"] { border-left: 4px solid var(--today); }
+tr.urgency-soon    th[scope="row"] { border-left: 4px solid var(--soon); }
+
+.badge { font-size: .8rem; font-weight: 600; }
+.badge.overdue  { color: var(--overdue); }
+.badge.today    { color: var(--today); }
+.badge.soon     { color: var(--soon); }
+.badge.upcoming { color: var(--upcoming); }
+.badge.none     { color: var(--none); }
+
+/* --- error page ------------------------------------------------------- */
+.panel.error { border-left: 4px solid var(--overdue); }
+.status { color: var(--muted); margin: 0 0 .5rem; font-variant-numeric: tabular-nums; }
+
+.site-footer { color: var(--muted); font-size: .85rem; padding-top: 1rem; }

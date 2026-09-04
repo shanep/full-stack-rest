@@ -1,0 +1,19 @@
+{
+  "name": "canvas-assignment-tracker",
+  "version": "1.0.0",
+  "description": "Example web app for the Canvas REST API mini-lab: lists upcoming assignments across your Canvas courses.",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}

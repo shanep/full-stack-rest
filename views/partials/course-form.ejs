@@ -1,0 +1,24 @@
+<!-- User input: which course to inspect, plus one filter toggle. -->
+<form class="course-form" action="/assignments" method="get">
+  <label for="courseId">Course</label>
+  <select id="courseId" name="courseId" required>
+    <option value="" disabled <%= selectedCourseId ? "" : "selected" %>>Choose a course...</option>
+    <% courses.forEach(function (course) { %>
+      <option
+        value="<%= course.id %>"
+        <%= String(course.id) === String(selectedCourseId) ? "selected" : "" %>
+      ><%= course.name %></option>
+    <% }); %>
+  </select>
+
+  <label class="checkbox">
+    <input
+      type="checkbox"
+      name="hide_submitted"
+      <%= typeof hideSubmitted !== "undefined" && hideSubmitted ? "checked" : "" %>
+    />
+    Hide assignments I already submitted
+  </label>
+
+  <button type="submit">Show assignments</button>
+</form>

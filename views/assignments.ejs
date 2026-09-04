@@ -1,0 +1,54 @@
+<%- include("partials/head", { pageTitle: courseName }) %>
+
+<section class="panel">
+  <h1><%= courseName %></h1>
+  <%- include("partials/course-form", { courses, selectedCourseId, hideSubmitted }) %>
+</section>
+
+<% if (assignments.length === 0) { %>
+  <section class="panel">
+    <p class="empty">
+      No assignments to show<%= hideSubmitted ? " (everything here is already submitted)" : "" %>.
+    </p>
+  </section>
+<% } else { %>
+  <ul class="summary">
+    <li class="pill overdue"><strong><%= summary.overdue %></strong> overdue</li>
+    <li class="pill today"><strong><%= summary.today %></strong> due today</li>
+    <li class="pill soon"><strong><%= summary.soon %></strong> due within 3 days</li>
+    <li class="pill upcoming"><strong><%= summary.upcoming %></strong> later</li>
+    <li class="pill none"><strong><%= summary.none %></strong> undated</li>
+  </ul>
+
+  <table class="assignments">
+    <caption><%= summary.total %> assignment<%= summary.total === 1 ? "" : "s" %>, soonest first</caption>
+    <thead>
+      <tr>
+        <th scope="col">Assignment</th>
+        <th scope="col">Due</th>
+        <th scope="col">When</th>
+        <th scope="col" class="numeric">Points</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% assignments.forEach(function (assignment) { %>
+        <tr class="urgency-<%= assignment.urgency %>">
+          <th scope="row">
+            <% if (assignment.htmlUrl) { %>
+              <a href="<%= assignment.htmlUrl %>" target="_blank" rel="noopener"><%= assignment.name %></a>
+            <% } else { %>
+              <%= assignment.name %>
+            <% } %>
+          </th>
+          <td><%= assignment.dueLabel %></td>
+          <td><span class="badge <%= assignment.urgency %>"><%= assignment.relativeDue %></span></td>
+          <td class="numeric"><%= assignment.points === null ? "--" : assignment.points %></td>
+          <td><%= assignment.submitted ? "Submitted" : "Not submitted" %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include("partials/foot") %>
