@@ -7,7 +7,7 @@ It answers the question "what is actually due next?" in one page, instead of
 clicking through Canvas course by course.
 
 > **This is the instructor's reference implementation for the Canvas REST API
-> mini-lab.** Read it, run it, take ideas from it — but build your own tool.
+> mini-lab.** Read it, run it, take ideas from it, but build your own tool.
 
 ---
 
@@ -49,7 +49,7 @@ npm install
 ```
 
 This creates `node_modules/`. You only need to run it once (and again whenever
-`package.json` changes). `node_modules/` is git-ignored — never commit it.
+`package.json` changes). `node_modules/` is git-ignored, so never commit it.
 
 ### 4. Create your `.env` file
 
@@ -71,7 +71,7 @@ PORT=3000
 > **Your token is a password.** It grants full access to your Canvas account.
 > `.env` is listed in [`.gitignore`](.gitignore) so git will not track it. If you
 > ever push a token by accident, delete it in Canvas *immediately* and generate a
-> new one — rewriting git history is not enough, because the old value is already
+> new one. Rewriting git history is not enough, because the old value is already
 > in someone's clone.
 
 ### 5. Run it
@@ -154,7 +154,7 @@ Every failure ends up on the same error page with a message a human can act on:
 | Rate limited (`429`) | "You are being rate limited by Canvas. Wait a moment and try again." |
 | Canvas unreachable / offline | "Could not reach Canvas at ... Check your network connection and CANVAS_BASE_URL." |
 
-Note that `fetch()` **only** rejects for network-level problems — a `401` or
+Note that `fetch()` **only** rejects for network-level problems. A `401` or
 `500` is a perfectly successful promise. Checking `response.ok` is not optional.
 
 ---
@@ -177,7 +177,7 @@ Note that `fetch()` **only** rejects for network-level problems — a `401` or
 
 The split is deliberate: `lib/canvas.js` is the only file that knows about HTTP,
 `lib/assignments.js` is the only file that knows about dates and urgency, and
-`server.js` just wires them to URLs. Each piece can be understood — and tested —
+`server.js` just wires them to URLs. Each piece can be understood (and tested)
 without the other two.
 
 ---
@@ -185,7 +185,7 @@ without the other two.
 ## Reflection
 
 The part that surprised me most was pagination. My first version called
-`/api/v1/courses`, got back a tidy array, and looked finished — but Canvas had
+`/api/v1/courses`, got back a tidy array, and looked finished, but Canvas had
 quietly returned only the first ten items and put the rest behind a `Link`
 header. Nothing in the JSON body hints that anything is missing, which is exactly
 what makes this bug dangerous: the app is confidently wrong rather than visibly
@@ -197,7 +197,7 @@ second page.
 
 The second thing I got wrong was assuming `fetch()` throws on an HTTP error. It
 does not. A `401` from an expired token resolves normally, and my early version
-sailed past it and crashed later on `courses.filter is not a function` — an error
+sailed past it and crashed later on `courses.filter is not a function`, an error
 message that says nothing at all about the actual problem. Checking
 `response.ok` immediately, and translating the status code into a sentence that
 tells the user what to *do* ("the token may be expired, revoked, or copied
@@ -207,8 +207,8 @@ too: some courses come back with `name: null` because the enrollment is
 restricted or concluded, and plenty of assignments have `due_at: null`, so the
 sort has to decide where undated work goes rather than crash on `null - Date`.
 
-With more time I would cache the course list — it changes once a semester but is
-re-fetched on every page load — and add a cross-course view that fans out to
+With more time I would cache the course list (it changes once a semester but is
+re-fetched on every page load) and add a cross-course view that fans out to
 `/assignments` for every enrollment at once, which is the tool I actually want
 each Sunday night. I would also move the token out of `.env` and into a proper
 Canvas OAuth2 flow, so the app could be deployed for other students instead of
