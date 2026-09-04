@@ -182,7 +182,7 @@ without the other two.
 
 ---
 
-## Reflection
+## Example Reflection
 
 The part that surprised me most was pagination. My first version called
 `/api/v1/courses`, got back a tidy array, and looked finished, but Canvas had
